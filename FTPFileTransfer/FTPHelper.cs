@@ -26,7 +26,6 @@ namespace FTPFileTransfer
         {
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create("ftp://" + FtpServerIp+"//"+fileNameWithPath);
             request.Method = WebRequestMethods.Ftp.DownloadFile;
-            // This example assumes the FTP site uses anonymous logon.
             request.Credentials = new NetworkCredential(Username, Password);
             FtpWebResponse response = (FtpWebResponse)request.GetResponse();
             Stream responseStream = response.GetResponseStream();
@@ -50,13 +49,14 @@ namespace FTPFileTransfer
             {
                 Directory.CreateDirectory(directoryName);
             }
-            string file = reader.ReadLine();
-            while (file != null)
+            ////{f|d} <file or directory name absolute path>
+            ////f for file and d for directory
+            string fileTypeAndFileName = reader.ReadLine();
+            while (fileTypeAndFileName != null)
             {
-                //drwxr-xr-x 1 ftp ftp              0 Mar 31 22:34 New folder
-                string[] fileDetails = file.Split(' ');
+                string[] fileDetails = fileTypeAndFileName.Split(' ');
 
-                //Check if this is directory or file
+                ////Check if this is directory or file
                 if (fileDetails[0].Contains('d'))
                 {
                     DownloadDirectory(directoryNameWithPath + "/" + fileDetails[fileDetails.Length - 1]);
@@ -65,7 +65,7 @@ namespace FTPFileTransfer
                 {
                     DownloadFile(directoryNameWithPath + "/" + fileDetails[fileDetails.Length - 1]);
                 }
-                file = reader.ReadLine();
+                fileTypeAndFileName = reader.ReadLine();
             }
         }
 
@@ -73,7 +73,6 @@ namespace FTPFileTransfer
         {
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create("ftp://" + FtpServerIp+"/"+fileName);
             request.Method = WebRequestMethods.Ftp.UploadFile;
-            // This example assumes the FTP site uses anonymous logon.
             request.Credentials = new NetworkCredential(Username, Password);
             byte[] uploadContents;
             uploadContents = File.ReadAllBytes(fileName);
