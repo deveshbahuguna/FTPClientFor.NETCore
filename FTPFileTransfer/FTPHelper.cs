@@ -16,7 +16,7 @@ namespace FTPFileTransfer
         /// <summary>
         /// This Create FTP Directory.
         /// </summary>
-        /// <param name="directoryName"></param>
+        /// <param name="directoryName">Directory name to create.</param>
         public static void CreateFTPDirectory(string directoryName)
         {
             WebRequest ftpRequest = WebRequest.Create("ftp://" + FtpServerIp+"/"+directoryName);
