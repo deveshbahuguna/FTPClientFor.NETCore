@@ -13,6 +13,10 @@ namespace FTPFileTransfer
         public static string Password = string.Empty;
 
 
+        /// <summary>
+        /// This Create FTP Directory.
+        /// </summary>
+        /// <param name="directoryName"></param>
         public static void CreateFTPDirectory(string directoryName)
         {
             WebRequest ftpRequest = WebRequest.Create("ftp://" + FtpServerIp+"/"+directoryName);
