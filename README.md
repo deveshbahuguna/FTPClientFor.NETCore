@@ -1,4 +1,4 @@
-##FTP Client Utility
+#FTP Client Utility
 
 This is a simple FTP Client utility developed in .net core. 
 
